@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FivePlay Controller — Démo manette</title>
+<style>
+html { color-scheme:dark; background:#0d1210; color:#eee; font:14px/1.5 Arial,sans-serif; }
+body { margin:0; padding:24px; } main { width:min(1180px,100%); margin:auto; }
+.test-nav { display:flex; justify-content:space-between; gap:15px; margin:0 0 15px; color:#91a08f; font-size:11px; letter-spacing:1px; }
+a { color:#becfb2; } .test-nav a { text-decoration:none; }
+.test-diagnostics { padding:16px 4px; color:#aebbac; font-size:12px; } .test-diagnostics summary { cursor:pointer; }
+.test-values { display:flex; flex-wrap:wrap; gap:24px; margin:18px 0; } .test-values strong { color:#d0dbc9; margin-right:8px; }
+canvas { width:100%; max-height:120px; background:#171e19; border:1px solid #374336; }
+.test-diagnostics button { padding:10px 14px; border:1px solid #6f8264; border-radius:6px; color:#e4f1da; background:#273023; font:inherit; cursor:pointer; }
+.test-diagnostics :focus-visible,.test-nav a:focus-visible { outline:2px solid #d3efb8; outline-offset:3px; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media (max-width:760px) { body { padding:10px; } .test-nav { padding:4px; font-size:10px; } }
+</style>
+</head>
+<body>
+<main>
+<h1 class="sr-only">FivePlay Controller — Configuration et test de manette</h1>
+<nav class="test-nav" aria-label="Navigation"><span>MA MANETTE / COMMANDES</span><a href="https://github.com/slihono/fiveplay-controller-demo">Code source ↗</a></nav>
+<div id="controller-mount"></div>
+<details class="test-diagnostics">
+<summary>Tester les commandes</summary>
+<p>Branche ta manette et appuie sur un bouton. Les touches du dessin s’éclairent quand tu les utilises. Ce test fonctionne sans lancer le jeu.</p>
+<div class="test-values">
+<div><strong>Déplacements</strong><span id="keys">Aucune</span></div>
+<div><strong>Viser / tirer</strong><span id="buttons">Relâchés</span></div>
+<div><strong>État</strong><span id="state">En attente</span></div>
+</div>
+<canvas id="preview" width="900" height="220" aria-label="Visualisation de la caméra : un réticule suit le stick droit"></canvas>
+<p>Le bouton ci-dessous vérifie le branchement avec une entrée simulée. Il ne remplace pas l’essai avec ta manette en conditions réelles.</p>
+<button type="button" id="self-test">Vérifier le fonctionnement</button>
+<p id="test-result" role="status"></p>
+</details>
+</main>
+<script type="module" src="./controller/controller-test.js"></script>
+</body>
+</html>

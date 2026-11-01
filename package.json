@@ -1,0 +1,15 @@
+{
+  "name": "fiveplay-controller-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone configurable browser gamepad demo by Seneve Lihono.",
+  "author": {
+    "name": "Seneve Lihono",
+    "url": "https://github.com/slihono"
+  },
+  "type": "module",
+  "scripts": {
+    "check": "node --check controller/controller-core.js && node --check controller/controller-memory.js && node --check controller/controller-layout.js && node --check controller/controller-ui.js && node --check controller/controller-test.js",
+    "test": "node --test tests/controller.test.js"
+  }
+}

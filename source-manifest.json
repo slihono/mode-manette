@@ -1,0 +1,12 @@
+{
+  "source_revision": "c818a69807a691351378efb222b915f050cc3581",
+  "original_file_sha256": {
+    "controller/controller-core.js": "ed8d02a07660e6d4176fd5b29ba3cfe232ac3266800e8e1c09b11fcecf616942",
+    "controller/controller-memory.js": "c910b26f6fecc615bae2844341e1f78720c23b90ee32780286a92b66e5f330eb",
+    "controller/controller-layout.js": "87bd8529a7934e60f2ef4b395cb84f42efdb86165a49d84569814f897b580891",
+    "controller/controller-ui.js": "07bc9d433d7b768a2510ed6ad3adf95d53c634e870a5e0a7d7036cd0c1bbdce4",
+    "controller/controller-test.js": "52bcda31a6ee4565e3aa5318edae170e4bb084a41893604937bc9da2e47d3f4d",
+    "controller/controller.css": "2c5e085240aa6bc416a97cb1642daf3ce027852bab6cb1686822c25221198226",
+    "controller/controller-diagram.svg": "bcf890407ecbce2cc5a2f28447ca769d32ee78dd42772bb586c5422b9ceeeaed"
+  }
+}
