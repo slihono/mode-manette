@@ -1,20 +1,20 @@
-# FivePlay Controller — démo autonome
+# Mode Manette
 
-Par **Seneve Lihono** ([slihono](https://github.com/slihono)).
+Par **Seneve Lihono** ([slihono](https://github.com/slihono)) · [splihono2@ualr.edu](mailto:splihono2@ualr.edu).
 
-Un projet personnel de programmation des commandes de jeu dans le navigateur : lecture de manettes, profils personnalisables, schéma interactif et visualisation des entrées. Cette version publique contient uniquement mes ajouts pour les manettes et leurs tests. Elle fonctionne sans moteur ni données de jeu.
+Un outil autonome pour configurer une manette : lecture des commandes, profils personnalisables, schéma interactif et visualisation des entrées. L’interface et les profils fonctionnent hors ligne, sans compte ni service distant.
 
 ## Essayer
 
-Avec Python 3 installé, depuis ce dossier :
+Sous Windows, double-cliquer sur `Demarrer-Mode-Manette.cmd`. Il faut Python 3.10 ou plus récent et un navigateur. Le lanceur ouvre la page locale et reste actif tant que sa fenêtre est ouverte. On peut également le démarrer depuis ce dossier :
 
 ```powershell
-python -m http.server 8087 --bind 127.0.0.1
+python -B serve_local.py
 ```
 
 Ouvrir <http://127.0.0.1:8087/> dans Chrome ou Edge, brancher une manette puis appuyer sur un bouton. Choisir un mode, cliquer sur une commande du schéma puis utiliser « Changer cette touche ». Les réglages avancés permettent d'ajuster la zone morte et la sensibilité et d'importer/exporter les profils JSON.
 
-La section « Tester les commandes » propose une vérification avec une entrée simulée. Elle vérifie le branchement des commandes, sans prétendre remplacer un essai avec une manette physique. Les profils sont enregistrés dans le stockage local du navigateur ; aucune donnée n'est envoyée à un serveur.
+La section « Tester les commandes » propose une vérification avec une entrée simulée. Les profils sont enregistrés dans le navigateur. Pour les conserver entre deux adresses ou ordinateurs, exporte-les puis importe-les au nouvel emplacement. Les profils sauvegardés dans l’ancienne démo restent lisibles à la même adresse.
 
 ## Vérifier le code
 

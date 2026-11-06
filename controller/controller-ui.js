@@ -1,7 +1,10 @@
 import { ACTIONS, MODES, ControllerMapper, defaultProfile, validateProfile, bindingLabel, bindingValue, learnBinding, snapshot, isNeutral, emptyState } from './controller-core.js';
 import { CONTROLS, actionLabel, controlLabel } from './controller-layout.js';
 
-const STORAGE = 'fiveplay-controller-v1:';
+const STORAGE = 'mode-manette-v1:';
+const LEGACY_STORAGE = 'fiveplay-controller-v1:';
+const SYMBOLS = 'mode-manette-symbols';
+const LEGACY_SYMBOLS = 'fiveplay-controller-symbols';
 const LABELS = Object.fromEntries(ACTIONS.map(([id, label]) => [id, label]));
 const element = (tag, text = '', props = {}) => Object.assign(document.createElement(tag), { textContent: text, ...props });
 const button = (text, className = '') => element('button', text, { type: 'button', className });
@@ -12,7 +15,7 @@ export function createControllerUI({ mount = null, readGamepads = () => { if (!n
 	const root = element(mount ? 'section' : 'dialog', '', { className: mount ? 'pad-workbench' : 'pad-dialog' });
 	root.setAttribute('aria-labelledby', 'pad-title');
 	const header = element('header', '', { className: 'pad-header' });
-	const heading = element('div'); heading.append(element('p', 'FIVEPLAY / CONTROLLER', { className: 'pad-eyebrow' }), element('h2', 'Les commandes, en un coup d’œil.', { id: 'pad-title' }));
+	const heading = element('div'); heading.append(element('p', 'MODE MANETTE', { className: 'pad-eyebrow' }), element('h2', 'Les commandes, en un coup d’œil.', { id: 'pad-title' }));
 	const close = button('×', 'pad-close'); close.setAttribute('aria-label', 'Fermer la configuration'); close.hidden = !!mount;
 	header.append(heading, close);
 	const intro = element('p', 'Clique sur une touche pour voir son rôle ou changer son attribution.', { className: 'pad-intro' });
@@ -63,7 +66,7 @@ export function createControllerUI({ mount = null, readGamepads = () => { if (!n
 	if (mount) mount.append(root); else document.body.append(launch, root);
 	let profile = defaultProfile(), pads = [], selectedIndex = null, identity = '', learning = null, family = 'ps';
 	let selected = 'r2', selectedAction = 'fire', devicesKey = null, destroyed = false, suspended = true, pollFailed = false;
-	try { if (localStorage.getItem('fiveplay-controller-symbols') === 'xbox') family = 'xbox'; } catch { /* Symbol preference is optional. */ }
+	try { if ((localStorage.getItem(SYMBOLS) ?? localStorage.getItem(LEGACY_SYMBOLS)) === 'xbox') family = 'xbox'; } catch { /* Symbol preference is optional. */ }
 	let writeInput = () => {}, clearPhysical = () => {}, state = emptyState(), last = 0, lastDisplay = 0;
 	const mapper = new ControllerMapper(), points = new Map(), labels = new Map(), lines = new Map();
 	const modalOpen = () => !mount && root.open;
@@ -146,7 +149,7 @@ export function createControllerUI({ mount = null, readGamepads = () => { if (!n
 	}
 	const loadDevice = (pad) => {
 		release(); clearPhysical(); identity = pad?.id || ''; learning = null; suspended = true;
-		try { const stored = localStorage.getItem(storageKey()); profile = stored ? validateProfile(JSON.parse(stored)) : defaultProfile(); }
+		try { const stored = localStorage.getItem(storageKey()) ?? localStorage.getItem(LEGACY_STORAGE + (identity || 'default')); profile = stored ? validateProfile(JSON.parse(stored)) : defaultProfile(); }
 		catch { profile = defaultProfile(); message('Ancien profil illisible : commandes GTA V chargées.'); }
 		refresh();
 	};
@@ -165,7 +168,7 @@ export function createControllerUI({ mount = null, readGamepads = () => { if (!n
 		if (!controlFor().actions[id].length) { selected = id === 'menu' ? 'cross' : 'r2'; selectedAction = null; }
 		setProfile({ ...profile, mode: id }); message('Profil ' + MODES[id].toLowerCase() + ' sélectionné.');
 	};
-	symbols.onchange = () => { family = symbols.value; try { localStorage.setItem('fiveplay-controller-symbols', family); } catch { /* Keep the selected symbols for this session. */ } refresh(); };
+	symbols.onchange = () => { family = symbols.value; try { localStorage.setItem(SYMBOLS, family); } catch { /* Keep the selected symbols for this session. */ } refresh(); };
 	learn.onclick = () => {
 		const pad = pads.find((p) => p.index === selectedIndex);
 		if (!pad) { message('Branche ta manette, puis appuie sur un bouton pour pouvoir modifier cette touche.', true); return; }
@@ -184,7 +187,7 @@ export function createControllerUI({ mount = null, readGamepads = () => { if (!n
 	reset.onclick = () => { setProfile(defaultProfile()); message('Commandes GTA V rétablies.'); };
 	exportButton.onclick = () => {
 		const url = URL.createObjectURL(new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' }));
-		const link = element('a', '', { href: url, download: 'fiveplay-manette.json' }); link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+		const link = element('a', '', { href: url, download: 'mode-manette-profil.json' }); link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 	};
 	importButton.onclick = () => file.click();
 	file.onchange = async () => {
